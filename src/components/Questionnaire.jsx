@@ -1,55 +1,9 @@
-import { useEffect } from "react"
-import { useState } from "react"
 import PropTypes from "prop-types"
-
-
-const startingInitials = {
-    name:"",
-    surname:"",
-    id:null
-}
+import useQuestionaire from "../hooks/useQuestionaire"
 
 const  Questionnaire = ({createStudents,updateStudents,dataTodoEdit,setDataTodoEdit}) => {
-const [request,setRequest] = useState(startingInitials)
 
-
-useEffect(() => {
-if(dataTodoEdit){
-    setRequest(dataTodoEdit)
-}else{
-    setRequest(startingInitials)
-}
-}, [dataTodoEdit])
-
-    const handleChange = (e) => {
-    setRequest({
-        ...request,
-        [e.target.name]:e.target.value
-    })
-    }
-
-    const handleSubmit = (e) => {
-        e.preventDefault()
-
-        if(!request.name || !request.surname){
-            alert("agrega los datos")
-            return;
-        }
-
-        if(request.id === null){
-            createStudents(request)
-        }else{
-            updateStudents(request)
-        }
-
-        handleReset();
-        
-    }
-
-    const handleReset = (e) => {
-        setRequest(startingInitials)
-        setDataTodoEdit(null)
-    }
+    const {handleSubmit,handleChange,handleReset,request,} = useQuestionaire({createStudents,updateStudents,dataTodoEdit,setDataTodoEdit})
 
     return(
         <div>
